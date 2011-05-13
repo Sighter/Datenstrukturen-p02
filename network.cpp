@@ -233,8 +233,13 @@ node* network::add_node(router* r)
     return pNew;
 }
 
-
-/* find a node */
+/* Exercise 2
+ * **********
+ * This function looks for a node with the specified ip adress.
+ * Starting at the given router, it walks along the router ring,
+ * till it finds the corresponding router for the searched node.
+ * If a router is found it checks the subnet.
+ */
 node* network::find_node(router* r, uint8* ip)
 {
     if (r == NULL || ip == NULL)
@@ -343,9 +348,14 @@ void network::ip_list_print(ip_node* pHead)
     }
 }
 
-    
-/* hunt a package through the network :)
- * returns a list of ip_nodes, where it has been gone through */
+
+/* Exercise 3 and Extra
+ * ********************    
+ * Hunt a package through the network :)
+ * returns a list of ip_nodes, where it has been gone through
+ * if the searched node is in the same subnet the search immediatly
+ * walks down in the same subnet, as it climbed up
+ */
 ip_node* network::pac_hunter(node* pStart, uint8* targetIp)
 {
     node* pSubWalker = pStart;

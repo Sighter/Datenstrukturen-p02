@@ -6,6 +6,25 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+
+/* Exercise 1
+ * **********
+ * Here, you find all main datastructures defined.
+ * 
+ * router : structure for managing a router
+ *
+ * node : structure for managing a subnet node, that will be managed
+ *        in a double linked list
+ *
+ * ip_node : element type for the ip list wich is needed
+ *           by the package hunter (see Exercise 3)
+ *
+ * network class : This class manages the router ring. Hence,
+ * it keeps track of a pointer for the ringlist.
+ * Every router has a pointer to a ip_node, and is regarding to this,
+ * connected to the subnet
+ */
+
 /* ip type */
 #define IPSEGMENTS 4
 typedef unsigned char uint8;
