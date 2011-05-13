@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.11 (TeX Live 2010/Arch Linux) (format=pdflatex 2011.5.4)  13 MAY 2011 20:17
+This is pdfTeX, Version 3.1415926-1.40.11 (TeX Live 2010/Arch Linux) (format=pdflatex 2011.5.4)  13 MAY 2011 20:49
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -307,7 +307,7 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <5> on input line 31.
 
-Overfull \hbox (0.61736pt too wide) in paragraph at lines 40--42
+Overfull \hbox (0.61736pt too wide) in paragraph at lines 40--43
 \OT1/ptm/m/n/10 Alle printf, ran-dom Func-ti-ons-auf-ru-fe und die da-mit ver-b
 un-de-nen Include-Anweisungen
  []
@@ -316,18 +316,18 @@ un-de-nen Include-Anweisungen
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] (./ds_p02.aux) ) 
 Here is how much of TeX's memory you used:
- 826 strings out of 493772
- 8762 string characters out of 3150565
- 57568 words of memory out of 3000000
- 4154 multiletter control sequences out of 15000+200000
- 16990 words of font info for 38 fonts, out of 3000000 for 9000
+ 828 strings out of 493772
+ 8782 string characters out of 3150565
+ 58568 words of memory out of 3000000
+ 4155 multiletter control sequences out of 15000+200000
+ 17505 words of font info for 40 fonts, out of 3000000 for 9000
  715 hyphenation exceptions out of 8191
  23i,7n,43p,155b,278s stack positions out of 5000i,500n,10000p,200000b,50000s
 {/usr/shar
 e/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texmf-dist/fonts/type1/urw
 /courier/ucrr8a.pfb></usr/share/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></u
 sr/share/texmf-dist/fonts/type1/urw/times/utmr8a.pfb>
-Output written on ds_p02.pdf (1 page, 37711 bytes).
+Output written on ds_p02.pdf (1 page, 38563 bytes).
 PDF statistics:
  21 PDF objects out of 1000 (max. 8388607)
  14 compressed objects within 1 object stream
