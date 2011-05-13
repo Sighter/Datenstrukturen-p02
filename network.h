@@ -49,23 +49,42 @@ struct node
     }
 };
 
+
+/* ip node for ip list */
+struct ip_node
+{
+    ip_node* pNext;
+    uint8 ip[IPSEGMENTS];
+    
+    ip_node()
+    :   pNext(NULL)
+    {
+        int i;
+        for (i = 0; i < IPSEGMENTS; i++)
+            ip[i] = 0;
+    }
+}
+
+
 /* network main class */
 class network
 {
     /* ringlist head */
     router* m_pHead;
     bool inc_router_ip(router* r);
-    bool inc_node_ip(node* r);
+    bool inc_node_ip(node* n);
 
     public:
     network();
     ~network();
     bool is_empty();
     void print_router(router* r);
+    void print_node(node* r);
     void print();
 
     router* add_router();
     node* add_node(router* r);
+    node* find_node(router* r, uint8* ip);
 };
 
 #endif
