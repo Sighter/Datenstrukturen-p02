@@ -63,7 +63,7 @@ struct ip_node
         for (i = 0; i < IPSEGMENTS; i++)
             ip[i] = 0;
     }
-}
+};
 
 
 /* network main class */
@@ -71,8 +71,10 @@ class network
 {
     /* ringlist head */
     router* m_pHead;
+
     bool inc_router_ip(router* r);
     bool inc_node_ip(node* n);
+    ip_node* ip_list_append(ip_node* pHead, uint8* ip);
 
     public:
     network();
@@ -85,6 +87,9 @@ class network
     router* add_router();
     node* add_node(router* r);
     node* find_node(router* r, uint8* ip);
+    ip_node* pac_hunter(node* pStart, uint8* targetIp);
+    void ip_list_delete(ip_node* pHead);
+    void ip_list_print(ip_node* pHead);
 };
 
 #endif

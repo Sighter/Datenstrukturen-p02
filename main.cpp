@@ -27,7 +27,7 @@ int main()
 
 
     /* search for a node */
-    uint8 ip[4] = {0,0,4,5};
+    uint8 ip[4] = {0,0,4,2};
 
     node* ret = net.find_node(pR, ip);
     if (ret != NULL)
@@ -40,7 +40,16 @@ int main()
         printf("Node not found\n");
 
 
-    
+    /* check the pac hunter */
+    uint8 targetIp[4] = {0, 0, 4, 4};
+    ip_node* pIpListHead = net.pac_hunter(ret, targetIp);
+
+    printf("\nPac-hunter:\n");
+    net.ip_list_print(pIpListHead);
+    printf("\n");
+
+    net.ip_list_delete(pIpListHead);
+
     net.print();
 
     return 0;

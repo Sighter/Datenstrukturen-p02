@@ -234,6 +234,7 @@ node* network::add_node(router* r)
 }
 
 
+/* find a node */
 node* network::find_node(router* r, uint8* ip)
 {
     if (r == NULL || ip == NULL)
@@ -273,3 +274,149 @@ node* network::find_node(router* r, uint8* ip)
 
     return NULL;
 }
+
+
+/* append a ip to the ip list, returns a new head or NULL on failure */
+ip_node* network::ip_list_append(ip_node* pHead, uint8* ip)
+{
+    if (pHead == NULL)
+    {
+        ip_node* pNew = new ip_node;
+        if (pNew == NULL)
+            return NULL;
+        int i;
+        for (i = 0; i < IPSEGMENTS; i++)
+            pNew->ip[i] = ip[i];
+
+        return pNew;
+    }
+    
+    
+    ip_node* pWalker = pHead;
+    while (pWalker->pNext != NULL)
+        pWalker = pWalker->pNext;
+
+    ip_node* pNew = new ip_node;
+    if (pNew == NULL)
+    {
+        ip_list_delete(pHead);
+        return NULL;
+    }
+        
+    int i;
+    for (i = 0; i < IPSEGMENTS; i++)
+        pNew->ip[i] = ip[i];
+
+    pWalker->pNext = pNew;
+
+    return pHead;
+}
+
+
+/* delete an entire ip list */
+void network::ip_list_delete(ip_node* pHead)
+{
+    ip_node* pWalker = pHead;
+    
+    while(pWalker != NULL)
+    {
+        ip_node* pDel = pWalker;
+        pWalker = pWalker->pNext;
+        delete pDel;
+    }
+}
+
+
+/* print an ip list */
+void network::ip_list_print(ip_node* pHead)
+{
+    ip_node* pWalker = pHead;
+
+    while (pWalker != NULL)
+    {
+        int i;
+        for (i = 0; i < IPSEGMENTS - 1; i++)
+            printf("%03d.", pWalker->ip[i]);
+
+        printf("%03d\n", pWalker->ip[IPSEGMENTS - 1]);
+        pWalker = pWalker->pNext;
+    }
+}
+
+    
+/* hunt a package through the network :)
+ * returns a list of ip_nodes, where it has been gone through */
+ip_node* network::pac_hunter(node* pStart, uint8* targetIp)
+{
+    node* pSubWalker = pStart;
+    router* pWalker = NULL;
+    ip_node* pIpListHead = NULL;
+
+    if (pStart == NULL || targetIp == NULL)
+        return NULL;
+
+    /* go till the first subnet node and append all ips 
+     * to list */
+    do
+    {
+        pIpListHead = ip_list_append(pIpListHead, pSubWalker->ip);
+        if (pIpListHead == NULL)
+            return NULL;
+        
+        pWalker = pSubWalker->pRouter;
+        pSubWalker = pSubWalker->pPrev;
+    } while (pSubWalker != NULL);
+
+    if (pWalker == NULL)
+        return NULL;
+
+    router* pStartRouter = pWalker;
+
+    /* walk around the router ring and check ip */ 
+    do
+    {
+        bool found_router = true;
+        int i = 0;
+
+        /* append to ip list */
+        pIpListHead = ip_list_append(pIpListHead, pWalker->ip);
+
+        /* check for right subnet */
+        for (i = 0; i < IPSEGMENTS - 1; i++)
+        {
+            if (pWalker->ip[i] != targetIp[i])
+            {
+                found_router = false;
+                break;
+            }
+        }
+
+        /* if router found look in the subnet */
+        if (found_router == true)
+        {
+            node* pSubWalker = pWalker->pSubnet;
+            
+            while (pSubWalker != NULL)
+            {
+                /* append node to ip list */
+                pIpListHead = ip_list_append(pIpListHead, pSubWalker->ip);
+
+                if (pSubWalker->ip[IPSEGMENTS - 1] == targetIp[IPSEGMENTS -1])
+                    return pIpListHead;
+
+                pSubWalker = pSubWalker->pNext;
+            }
+
+            /* if we are here, no node is found */
+            ip_list_delete(pIpListHead);
+            return NULL;
+        }
+        
+        pWalker = pWalker->pNext;
+    } while (pWalker != pStartRouter);
+
+    /* if we are here, no subnet is found */
+    ip_list_delete(pIpListHead);
+    return NULL;
+}
+
